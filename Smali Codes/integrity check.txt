@@ -1,0 +1,479 @@
+.method public onResume()V
+    .registers 23
+
+    .line 180
+    const-string v1, "YourActivity"
+
+    const-string v2, "YourActivity"
+
+    .line 181
+    .local v2, "TAG":Ljava/lang/String;
+    const-string v3, "8dbedec953b8707951eae7a4a2813374e7381d"
+
+    .line 185
+    .local v3, "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    invoke-virtual/range {p0 .. p0}, Lcom/shanuka/signaturedetector/FirstFragment;->requireContext()Landroid/content/Context;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
+
+    move-result-object v4
+
+    .line 189
+    .local v4, "pm":Landroid/content/pm/PackageManager;
+    :try_start_e
+    invoke-virtual/range {p0 .. p0}, Lcom/shanuka/signaturedetector/FirstFragment;->requireContext()Landroid/content/Context;
+
+    move-result-object v0
+
+    invoke-virtual {v0}, Landroid/content/Context;->getPackageName()Ljava/lang/String;
+
+    move-result-object v0
+
+    move-object v5, v0
+
+    .line 190
+    .local v5, "packageName":Ljava/lang/String;
+    const/16 v0, 0x40
+
+    invoke-virtual {v4, v5, v0}, Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;I)Landroid/content/pm/PackageInfo;
+
+    move-result-object v0
+
+    move-object v6, v0
+
+    .line 191
+    .local v6, "packageInfo":Landroid/content/pm/PackageInfo;
+    const-string v0, ""
+
+    .line 192
+    .local v0, "getSignatureHash":Ljava/lang/String;
+    const/4 v7, 0x0
+
+    .line 193
+    .local v7, "signaturesMatch":Z
+    iget-object v8, v6, Landroid/content/pm/PackageInfo;->signatures:[Landroid/content/pm/Signature;
+
+    array-length v9, v8
+    :try_end_24
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_e .. :try_end_24} :catch_f6
+
+    move-object v11, v0
+
+    const/4 v12, 0x0
+
+    .end local v0    # "getSignatureHash":Ljava/lang/String;
+    .local v11, "getSignatureHash":Ljava/lang/String;
+    :goto_26
+    if-ge v12, v9, :cond_bc
+
+    :try_start_28
+    aget-object v0, v8, v12
+    :try_end_2a
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_28 .. :try_end_2a} :catch_b4
+
+    move-object v13, v0
+
+    .line 195
+    .local v13, "signature":Landroid/content/pm/Signature;
+    :try_start_2b
+    invoke-virtual {v13}, Landroid/content/pm/Signature;->toByteArray()[B
+
+    move-result-object v0
+
+    .line 196
+    .local v0, "signatureBytes":[B
+    const-string v14, "SHA-1"
+
+    invoke-static {v14}, Ljava/security/MessageDigest;->getInstance(Ljava/lang/String;)Ljava/security/MessageDigest;
+
+    move-result-object v14
+
+    .line 197
+    .local v14, "md":Ljava/security/MessageDigest;
+    invoke-virtual {v14, v0}, Ljava/security/MessageDigest;->digest([B)[B
+
+    move-result-object v15
+
+    .line 198
+    .local v15, "digest":[B
+    new-instance v16, Ljava/lang/StringBuilder;
+
+    invoke-direct/range {v16 .. v16}, Ljava/lang/StringBuilder;-><init>()V
+
+    move-object/from16 v17, v16
+
+    .line 199
+    .local v17, "hexString":Ljava/lang/StringBuilder;
+    array-length v10, v15
+
+    move-object/from16 v18, v0
+
+    const/4 v0, 0x0
+
+    .end local v0    # "signatureBytes":[B
+    .local v18, "signatureBytes":[B
+    :goto_44
+    if-ge v0, v10, :cond_67
+
+    aget-byte v19, v15, v0
+    :try_end_48
+    .catch Ljava/lang/Exception; {:try_start_2b .. :try_end_48} :catch_75
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_2b .. :try_end_48} :catch_b4
+
+    move/from16 v20, v19
+
+    .line 200
+    .local v20, "aDigest":B
+    move-object/from16 v19, v2
+
+    move/from16 v2, v20
+
+    move-object/from16 v20, v3
+
+    .end local v3    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    .local v2, "aDigest":B
+    .local v19, "TAG":Ljava/lang/String;
+    .local v20, "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    and-int/lit16 v3, v2, 0xff
+
+    :try_start_52
+    invoke-static {v3}, Ljava/lang/Integer;->toHexString(I)Ljava/lang/String;
+
+    move-result-object v3
+
+    move/from16 v21, v2
+
+    move-object/from16 v2, v17
+
+    .end local v17    # "hexString":Ljava/lang/StringBuilder;
+    .local v2, "hexString":Ljava/lang/StringBuilder;
+    .local v21, "aDigest":B
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 199
+    nop
+
+    .end local v21    # "aDigest":B
+    add-int/lit8 v0, v0, 0x1
+
+    move-object/from16 v17, v2
+
+    move-object/from16 v2, v19
+
+    move-object/from16 v3, v20
+
+    goto :goto_44
+
+    .line 202
+    .end local v19    # "TAG":Ljava/lang/String;
+    .end local v20    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    .local v2, "TAG":Ljava/lang/String;
+    .restart local v3    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    .restart local v17    # "hexString":Ljava/lang/StringBuilder;
+    :cond_67
+    move-object/from16 v19, v2
+
+    move-object/from16 v20, v3
+
+    move-object/from16 v2, v17
+
+    .end local v3    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    .end local v17    # "hexString":Ljava/lang/StringBuilder;
+    .local v2, "hexString":Ljava/lang/StringBuilder;
+    .restart local v19    # "TAG":Ljava/lang/String;
+    .restart local v20    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v0
+    :try_end_71
+    .catch Ljava/lang/Exception; {:try_start_52 .. :try_end_71} :catch_73
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_52 .. :try_end_71} :catch_ef
+
+    .line 205
+    .end local v2    # "hexString":Ljava/lang/StringBuilder;
+    .end local v11    # "getSignatureHash":Ljava/lang/String;
+    .end local v14    # "md":Ljava/security/MessageDigest;
+    .end local v15    # "digest":[B
+    .end local v18    # "signatureBytes":[B
+    .local v0, "getSignatureHash":Ljava/lang/String;
+    move-object v11, v0
+
+    goto :goto_96
+
+    .line 203
+    .end local v0    # "getSignatureHash":Ljava/lang/String;
+    .restart local v11    # "getSignatureHash":Ljava/lang/String;
+    :catch_73
+    move-exception v0
+
+    goto :goto_7a
+
+    .end local v19    # "TAG":Ljava/lang/String;
+    .end local v20    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    .local v2, "TAG":Ljava/lang/String;
+    .restart local v3    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    :catch_75
+    move-exception v0
+
+    move-object/from16 v19, v2
+
+    move-object/from16 v20, v3
+
+    .line 204
+    .end local v2    # "TAG":Ljava/lang/String;
+    .end local v3    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    .local v0, "e":Ljava/lang/Exception;
+    .restart local v19    # "TAG":Ljava/lang/String;
+    .restart local v20    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    :goto_7a
+    :try_start_7a
+    const-string v2, "log"
+
+    new-instance v3, Ljava/lang/StringBuilder;
+
+    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v10, "Error while generating signature hash: "
+
+    invoke-virtual {v3, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v0}, Ljava/lang/Exception;->getMessage()Ljava/lang/String;
+
+    move-result-object v10
+
+    invoke-virtual {v3, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v3
+
+    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-static {v2, v3}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 208
+    .end local v0    # "e":Ljava/lang/Exception;
+    :goto_96
+    move-object v0, v11
+
+    .line 210
+    .local v0, "signatureHash":Ljava/lang/String;
+    const-string v2, "8dbedec953b8707951eae7a4a2813374e7381d"
+
+    invoke-virtual {v2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_a6
+
+    .line 211
+    const-string v2, "Signatures match. App is valid."
+
+    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 212
+    const/4 v7, 0x1
+
+    .line 213
+    goto :goto_c0
+
+    .line 216
+    :cond_a6
+    const-string v2, "Signatures Mismatch. Applicon will be closed."
+
+    invoke-static {v1, v2}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 193
+    nop
+
+    .end local v0    # "signatureHash":Ljava/lang/String;
+    .end local v13    # "signature":Landroid/content/pm/Signature;
+    add-int/lit8 v12, v12, 0x1
+
+    move-object/from16 v2, v19
+
+    move-object/from16 v3, v20
+
+    goto/16 :goto_26
+
+    .line 232
+    .end local v5    # "packageName":Ljava/lang/String;
+    .end local v6    # "packageInfo":Landroid/content/pm/PackageInfo;
+    .end local v7    # "signaturesMatch":Z
+    .end local v11    # "getSignatureHash":Ljava/lang/String;
+    .end local v19    # "TAG":Ljava/lang/String;
+    .end local v20    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    .restart local v2    # "TAG":Ljava/lang/String;
+    .restart local v3    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    :catch_b4
+    move-exception v0
+
+    move-object/from16 v19, v2
+
+    move-object/from16 v20, v3
+
+    move-object/from16 v8, p0
+
+    goto :goto_fd
+
+    .line 193
+    .restart local v5    # "packageName":Ljava/lang/String;
+    .restart local v6    # "packageInfo":Landroid/content/pm/PackageInfo;
+    .restart local v7    # "signaturesMatch":Z
+    .restart local v11    # "getSignatureHash":Ljava/lang/String;
+    :cond_bc
+    move-object/from16 v19, v2
+
+    move-object/from16 v20, v3
+
+    .line 220
+    .end local v2    # "TAG":Ljava/lang/String;
+    .end local v3    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    .restart local v19    # "TAG":Ljava/lang/String;
+    .restart local v20    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    :goto_c0
+    if-nez v7, :cond_f3
+
+    .line 221
+    new-instance v0, Landroid/app/AlertDialog$Builder;
+
+    invoke-virtual/range {p0 .. p0}, Lcom/shanuka/signaturedetector/FirstFragment;->requireContext()Landroid/content/Context;
+
+    move-result-object v2
+
+    invoke-direct {v0, v2}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
+
+    const-string v2, "Signature Mismatch"
+
+    .line 222
+    invoke-virtual {v0, v2}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v0
+
+    const-string v2, "The app\'s signature does not match the expected signature. The app will now close."
+
+    .line 223
+    invoke-virtual {v0, v2}, Landroid/app/AlertDialog$Builder;->setMessage(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v0
+
+    .line 224
+    const/4 v2, 0x0
+
+    invoke-virtual {v0, v2}, Landroid/app/AlertDialog$Builder;->setCancelable(Z)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v0
+
+    const-string v2, "OK"
+
+    new-instance v3, Lcom/shanuka/signaturedetector/FirstFragment$4;
+    :try_end_e0
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_7a .. :try_end_e0} :catch_ef
+
+    move-object/from16 v8, p0
+
+    :try_start_e2
+    invoke-direct {v3, v8}, Lcom/shanuka/signaturedetector/FirstFragment$4;-><init>(Lcom/shanuka/signaturedetector/FirstFragment;)V
+
+    .line 225
+    invoke-virtual {v0, v2, v3}, Landroid/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v0
+
+    .line 230
+    invoke-virtual {v0}, Landroid/app/AlertDialog$Builder;->show()Landroid/app/AlertDialog;
+    :try_end_ec
+    .catch Landroid/content/pm/PackageManager$NameNotFoundException; {:try_start_e2 .. :try_end_ec} :catch_ed
+
+    goto :goto_f5
+
+    .line 232
+    .end local v5    # "packageName":Ljava/lang/String;
+    .end local v6    # "packageInfo":Landroid/content/pm/PackageInfo;
+    .end local v7    # "signaturesMatch":Z
+    .end local v11    # "getSignatureHash":Ljava/lang/String;
+    :catch_ed
+    move-exception v0
+
+    goto :goto_fd
+
+    :catch_ef
+    move-exception v0
+
+    move-object/from16 v8, p0
+
+    goto :goto_fd
+
+    .line 220
+    .restart local v5    # "packageName":Ljava/lang/String;
+    .restart local v6    # "packageInfo":Landroid/content/pm/PackageInfo;
+    .restart local v7    # "signaturesMatch":Z
+    .restart local v11    # "getSignatureHash":Ljava/lang/String;
+    :cond_f3
+    move-object/from16 v8, p0
+
+    .line 234
+    .end local v5    # "packageName":Ljava/lang/String;
+    .end local v6    # "packageInfo":Landroid/content/pm/PackageInfo;
+    .end local v7    # "signaturesMatch":Z
+    .end local v11    # "getSignatureHash":Ljava/lang/String;
+    :goto_f5
+    goto :goto_117
+
+    .line 232
+    .end local v19    # "TAG":Ljava/lang/String;
+    .end local v20    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    .restart local v2    # "TAG":Ljava/lang/String;
+    .restart local v3    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    :catch_f6
+    move-exception v0
+
+    move-object/from16 v8, p0
+
+    move-object/from16 v19, v2
+
+    move-object/from16 v20, v3
+
+    .line 233
+    .end local v2    # "TAG":Ljava/lang/String;
+    .end local v3    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    .local v0, "e":Landroid/content/pm/PackageManager$NameNotFoundException;
+    .restart local v19    # "TAG":Ljava/lang/String;
+    .restart local v20    # "HARD_CODED_SIGNATURE":Ljava/lang/String;
+    :goto_fd
+    new-instance v2, Ljava/lang/StringBuilder;
+
+    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
+
+    const-string v3, "Package not found: "
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v0}, Landroid/content/pm/PackageManager$NameNotFoundException;->getMessage()Ljava/lang/String;
+
+    move-result-object v3
+
+    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-static {v1, v2}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 236
+    .end local v0    # "e":Landroid/content/pm/PackageManager$NameNotFoundException;
+    :goto_117
+    invoke-super/range {p0 .. p0}, Landroidx/fragment/app/Fragment;->onResume()V
+
+    .line 237
+    return-void
+.end method

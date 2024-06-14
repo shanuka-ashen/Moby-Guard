@@ -1,0 +1,210 @@
+a
+aa
+aaa
+aaa
+aaa
+
+aaa
+aaa
+aa
+
+
+
+aaa
+aaa
+aa
+
+aaa
+
+1234
+.method public onResume()V
+    .locals 10
+
+    .line 133
+    const-string v0, "zygote"
+
+    .line 134
+    .local v0, "searchString":Ljava/lang/String;
+    const-string v1, "logcat -d"
+
+    .line 137
+    .local v1, "logcatCommand":Ljava/lang/String;
+    :try_start_0
+    invoke-static {}, Ljava/lang/Runtime;->getRuntime()Ljava/lang/Runtime;
+
+    move-result-object v2
+
+    invoke-virtual {v2, v1}, Ljava/lang/Runtime;->exec(Ljava/lang/String;)Ljava/lang/Process;
+
+    move-result-object v2
+
+    .line 138
+    .local v2, "process":Ljava/lang/Process;
+    new-instance v3, Ljava/io/BufferedReader;
+
+    new-instance v4, Ljava/io/InputStreamReader;
+
+    invoke-virtual {v2}, Ljava/lang/Process;->getInputStream()Ljava/io/InputStream;
+
+    move-result-object v5
+
+    invoke-direct {v4, v5}, Ljava/io/InputStreamReader;-><init>(Ljava/io/InputStream;)V
+
+    invoke-direct {v3, v4}, Ljava/io/BufferedReader;-><init>(Ljava/io/Reader;)V
+
+    .line 139
+    .local v3, "reader":Ljava/io/BufferedReader;
+    new-instance v4, Ljava/lang/StringBuilder;
+
+    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
+
+    .line 141
+    .local v4, "log":Ljava/lang/StringBuilder;
+    const/4 v5, 0x0
+
+    .line 143
+    .local v5, "zygoteDetected":Z
+    :cond_0
+    :goto_0
+    invoke-virtual {v3}, Ljava/io/BufferedReader;->readLine()Ljava/lang/String;
+
+    move-result-object v6
+
+    move-object v7, v6
+
+    .local v7, "line":Ljava/lang/String;
+    if-eqz v6, :cond_1
+
+    .line 144
+    invoke-virtual {v7, v0}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+
+    move-result v6
+
+    if-eqz v6, :cond_0
+
+    .line 145
+    invoke-virtual {v4, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    move-result-object v6
+
+    const-string v8, "\n"
+
+    invoke-virtual {v6, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    .line 146
+    const/4 v5, 0x1
+
+    goto :goto_0
+
+    .line 150
+    :cond_1
+    invoke-virtual {v3}, Ljava/io/BufferedReader;->close()V
+    :try_end_0
+    .catch Ljava/io/IOException; {:try_start_0 .. :try_end_0} :catch_0
+
+    .line 152
+    const-string v6, "Logcat Output"
+
+    if-eqz v5, :cond_2
+
+    .line 153
+    :try_start_1
+    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+
+    move-result-object v8
+
+    .line 154
+    .local v8, "logcatOutput":Ljava/lang/String;
+    invoke-static {v6, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 156
+    new-instance v6, Landroid/app/AlertDialog$Builder;
+
+    invoke-virtual {p0}, Lcom/shanuka/signaturedetector/FirstFragment;->requireContext()Landroid/content/Context;
+
+    move-result-object v9
+
+    invoke-direct {v6, v9}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
+
+    const-string v9, "Magisk Detected!"
+
+    .line 157
+    invoke-virtual {v6, v9}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v6
+
+    const-string v9, "Magisk related processes identified in this mobile device."
+
+    .line 158
+    invoke-virtual {v6, v9}, Landroid/app/AlertDialog$Builder;->setMessage(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v6
+
+    .line 159
+    invoke-virtual {v6}, Landroid/app/AlertDialog$Builder;->show()Landroid/app/AlertDialog;
+
+    .line 160
+    nop
+
+    .end local v8    # "logcatOutput":Ljava/lang/String;
+    goto :goto_1
+
+    .line 161
+    :cond_2
+    const-string v8, "No matches found in logcat."
+
+    invoke-static {v6, v8}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+
+    .line 163
+    new-instance v6, Landroid/app/AlertDialog$Builder;
+
+    invoke-virtual {p0}, Lcom/shanuka/signaturedetector/FirstFragment;->requireContext()Landroid/content/Context;
+
+    move-result-object v8
+
+    invoke-direct {v6, v8}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
+
+    const-string v8, "Magisk had not been detected"
+
+    .line 164
+    invoke-virtual {v6, v8}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v6
+
+    const-string v8, "Magisk related processes cannot be identified in this mobile device."
+
+    .line 165
+    invoke-virtual {v6, v8}, Landroid/app/AlertDialog$Builder;->setMessage(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+
+    move-result-object v6
+
+    .line 166
+    invoke-virtual {v6}, Landroid/app/AlertDialog$Builder;->show()Landroid/app/AlertDialog;
+    :try_end_1
+    .catch Ljava/io/IOException; {:try_start_1 .. :try_end_1} :catch_0
+
+    .line 170
+    .end local v2    # "process":Ljava/lang/Process;
+    .end local v3    # "reader":Ljava/io/BufferedReader;
+    .end local v4    # "log":Ljava/lang/StringBuilder;
+    .end local v5    # "zygoteDetected":Z
+    .end local v7    # "line":Ljava/lang/String;
+    :goto_1
+    goto :goto_2
+
+    .line 168
+    :catch_0
+    move-exception v2
+
+    .line 169
+    .local v2, "e":Ljava/io/IOException;
+    invoke-virtual {v2}, Ljava/io/IOException;->printStackTrace()V
+
+    .line 172
+    .end local v2    # "e":Ljava/io/IOException;
+    :goto_2
+    invoke-super {p0}, Landroidx/fragment/app/Fragment;->onResume()V
+
+    .line 173
+    return-void
+.end method
